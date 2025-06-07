@@ -44,6 +44,12 @@ if user_type == "Player":
         for p in filtered:
             st.write(f"**{p['name']}** | {p['age']} y/o | {p['level']} | Available: {p['availability']}")
 
+    st.subheader("📅 Book a Coach")
+    for coach in coaches:
+        st.write(f"**{coach['name']}** | {coach['rate']} | Specialties: {coach['specialties']} | Available: {coach['availability']}")
+        if st.button(f"📅 Book {coach['name']}", key=f"book_{coach['name']}"):
+            st.success(f"Booking request sent to {coach['name']}!")
+
 # Coach side
 if user_type == "Coach":
     st.subheader("📅 Coach Dashboard")
@@ -51,6 +57,8 @@ if user_type == "Coach":
     specialties = st.text_area("Specialties")
     availability = st.text_input("Availability")
     if st.button("📢 Save My Profile"):
+        new_coach = {"name": name, "rate": rate, "specialties": specialties, "availability": availability}
+        coaches.append(new_coach)
         st.success("Coach profile saved!")
         st.write(f"**{name}** | Rate: {rate} | Available: {availability}")
 
@@ -59,7 +67,6 @@ st.markdown("---")
 st.header("🧑‍🏫 Available Coaches")
 for coach in coaches:
     st.write(f"**{coach['name']}** | {coach['rate']} | Specialties: {coach['specialties']} | Available: {coach['availability']}")
-    st.button(f"📅 Book {coach['name']}", key=coach['name'])
 
 # Map of courts (mock locations)
 st.markdown("---")
